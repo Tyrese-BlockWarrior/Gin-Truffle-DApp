@@ -6,14 +6,10 @@ module.exports = function (_deployer) {
   _deployer
     .deploy(Cert)
     .then((instance) => {
-      writeFileSync(
-        "deployer.json",
-        JSON.stringify(instance.constructor.class_defaults, null, 2)
-      );
-      writeFileSync(
-        "Cert.abi",
-        JSON.stringify(instance.abi, null, 2)
-      );
+      let details = instance.constructor.class_defaults;
+      details["contract"] = instance.address;
+      writeFileSync("details.json", JSON.stringify(details, null, 2));
+      writeFileSync("Cert.abi", JSON.stringify(instance.abi, null, 2));
     })
     .catch((err) => {
       console.log(err);
