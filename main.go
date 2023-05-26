@@ -4,22 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/gin-gonic/gin"
 )
-
-func home(ctx *gin.Context, client *ethclient.Client) {
-	networkID, err := infoService(client)
-	if err != nil {
-		log.Fatal(err)
-	}
-	
-	ctx.IndentedJSON(http.StatusOK, gin.H{"net_version": networkID})
-}
 
 func main() {
 	file, err := os.Open("details.json")
@@ -51,7 +41,7 @@ func main() {
 
 	router := gin.Default()
 	router.GET("/", func(ctx *gin.Context) {
-		home(ctx, client)
+		infoController(ctx, client)
 	})
 	router.Run("localhost:8080")
 }
