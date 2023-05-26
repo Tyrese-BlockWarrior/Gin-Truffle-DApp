@@ -43,11 +43,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	_ = instance
 
 	router := gin.Default()
 	router.GET("/", func(ctx *gin.Context) {
 		infoController(ctx, client)
+	})
+	router.POST("/issue", func(ctx *gin.Context) {
+		issueController(ctx, client, instance)
 	})
 	router.Run("localhost:8080")
 }
