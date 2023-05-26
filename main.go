@@ -51,5 +51,8 @@ func main() {
 	router.POST("/issue", func(ctx *gin.Context) {
 		issueController(ctx, client, instance)
 	})
+	router.GET(("/fetch/:id"), func(ctx *gin.Context) {
+		fetchController(ctx, instance)
+	})
 	router.Run("localhost:8080")
 }

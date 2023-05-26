@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/gin-gonic/gin"
@@ -27,4 +28,19 @@ func issueController(ctx *gin.Context, client *ethclient.Client, instance *Cert)
 	}
 
 	ctx.IndentedJSON(http.StatusCreated, trx)
+}
+
+func fetchController(ctx *gin.Context, instance *Cert) {
+	param := ctx.Param("id")
+	id, err := strconv.ParseInt(param, 10, 64)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	result, err := fetchService(instance, id)
+	if err != nil {
+		ctx.AbortWithStatus(400)
+	}
+
+	ctx.IndentedJSON(http.StatusOK, result)
 }

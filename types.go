@@ -12,3 +12,10 @@ type InsertCertificate struct {
 	Grade  string `json:"grade"`
 	Date   string `json:"date"`
 }
+
+type ReturnCertificate struct {
+	Name   string
+	Course string
+	Grade  string
+	Date   string
+}

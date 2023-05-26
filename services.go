@@ -70,3 +70,11 @@ func issueService(client *ethclient.Client, instance *Cert, newCertificate Inser
 
 	return trx, err
 }
+
+func fetchService(instance *Cert, id int64) (ReturnCertificate, error) {
+	opts := bind.CallOpts{}
+	certID := big.NewInt(id)
+
+	result, err := instance.Certificates(&opts, certID)
+	return result, err
+}
