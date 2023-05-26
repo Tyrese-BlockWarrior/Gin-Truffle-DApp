@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -14,7 +13,7 @@ import (
 )
 
 func home(ctx *gin.Context, client *ethclient.Client) {
-	networkID, err := client.NetworkID(context.Background())
+	networkID, err := infoService(client)
 	if err != nil {
 		log.Fatal(err)
 	}
