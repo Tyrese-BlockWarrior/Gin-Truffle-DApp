@@ -41,6 +41,8 @@ Deploy contract
 truffle migrate
 ```
 
+Paste the private key in the '.env' file
+
 Install abigen
 
 ```bash
@@ -50,7 +52,7 @@ go install github.com/ethereum/go-ethereum/cmd/abigen@latest
 Generate Go binding for contract
 
 ```bash
-abigen --abi Cert.abi --pkg main --type Cert --out Cert.go
+abigen --abi Cert.abi --pkg lib --type Cert --out lib/Cert.go
 ```
 
 Start the application
