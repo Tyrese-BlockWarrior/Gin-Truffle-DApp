@@ -6,6 +6,9 @@ import (
 	"log"
 	"os"
 
+	"github.com/DEMYSTIF/gin-truffle-dapp/controllers"
+	"github.com/DEMYSTIF/gin-truffle-dapp/lib"
+	"github.com/DEMYSTIF/gin-truffle-dapp/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/gin-gonic/gin"
@@ -25,7 +28,7 @@ func main() {
 	defer file.Close()
 
 	decoder := json.NewDecoder(file)
-	details := Details{}
+	details := types.Details{}
 	err = decoder.Decode(&details)
 	if err != nil {
 		log.Fatal(err)
@@ -39,20 +42,20 @@ func main() {
 		log.Fatal(err)
 	}
 
-	instance, err := NewCert(contractAddress, client)
+	instance, err := lib.NewCert(contractAddress, client)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	router := gin.Default()
 	router.GET("/", func(ctx *gin.Context) {
-		infoController(ctx, client)
+		controllers.InfoController(ctx, client)
 	})
 	router.POST("/issue", func(ctx *gin.Context) {
-		issueController(ctx, client, instance)
+		controllers.IssueController(ctx, client, instance)
 	})
 	router.GET(("/fetch/:id"), func(ctx *gin.Context) {
-		fetchController(ctx, instance)
+		controllers.FetchController(ctx, instance)
 	})
 	router.Run("localhost:8080")
 }

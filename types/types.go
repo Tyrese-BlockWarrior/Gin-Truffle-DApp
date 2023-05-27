@@ -1,4 +1,4 @@
-package main
+package types
 
 type Details struct {
 	From     string `json:"from"`

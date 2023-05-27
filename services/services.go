@@ -1,4 +1,4 @@
-package main
+package services
 
 import (
 	"context"
@@ -7,13 +7,15 @@ import (
 	"math/big"
 	"os"
 
+	"github.com/DEMYSTIF/gin-truffle-dapp/lib"
+	certTypes "github.com/DEMYSTIF/gin-truffle-dapp/types"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
-func infoService(client *ethclient.Client) (*big.Int, *big.Int, uint64) {
+func InfoService(client *ethclient.Client) (*big.Int, *big.Int, uint64) {
 	networkID, err := client.NetworkID(context.Background())
 	if err != nil {
 		log.Fatal(err)
@@ -32,7 +34,7 @@ func infoService(client *ethclient.Client) (*big.Int, *big.Int, uint64) {
 	return networkID, chainID, latestBlock
 }
 
-func issueService(client *ethclient.Client, instance *Cert, newCertificate InsertCertificate) (*types.Transaction, error) {
+func IssueService(client *ethclient.Client, instance *lib.Cert, newCertificate certTypes.InsertCertificate) (*types.Transaction, error) {
 	privateKey, err := crypto.HexToECDSA(os.Getenv("PRIVATE_KEY"))
 	if err != nil {
 		log.Fatal(err)
@@ -56,7 +58,7 @@ func issueService(client *ethclient.Client, instance *Cert, newCertificate Inser
 		log.Fatal(err)
 	}
 
-	_, chainID, _ := infoService(client)
+	_, chainID, _ := InfoService(client)
 	auth, err := bind.NewKeyedTransactorWithChainID(privateKey, chainID)
 	if err != nil {
 		log.Fatal(err)
@@ -71,7 +73,7 @@ func issueService(client *ethclient.Client, instance *Cert, newCertificate Inser
 	return trx, err
 }
 
-func fetchService(instance *Cert, id int64) (ReturnCertificate, error) {
+func FetchService(instance *lib.Cert, id int64) (certTypes.ReturnCertificate, error) {
 	opts := bind.CallOpts{}
 	certID := big.NewInt(id)
 
