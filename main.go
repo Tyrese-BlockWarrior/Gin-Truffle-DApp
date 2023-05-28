@@ -51,13 +51,19 @@ func main() {
 	router.Static("/static", "./assets")
 	router.LoadHTMLGlob("templates/*")
 	router.GET("/", func(ctx *gin.Context) {
-		controllers.InfoController(ctx, client)
+		controllers.IndexPageController(ctx)
+	})
+	router.GET("/issue", func(ctx *gin.Context) {
+		controllers.IssuePageController(ctx)
 	})
 	router.POST("/issue", func(ctx *gin.Context) {
 		controllers.IssueController(ctx, client, instance)
 	})
-	router.GET(("/fetch/:id"), func(ctx *gin.Context) {
+	router.GET(("/fetch"), func(ctx *gin.Context) {
 		controllers.FetchController(ctx, instance)
+	})
+	router.GET("/info", func(ctx *gin.Context) {
+		controllers.InfoController(ctx, client)
 	})
 	router.Run("localhost:8080")
 }

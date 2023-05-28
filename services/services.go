@@ -6,6 +6,7 @@ import (
 	"log"
 	"math/big"
 	"os"
+	"strconv"
 
 	"github.com/DEMYSTIF/gin-truffle-dapp/lib"
 	certTypes "github.com/DEMYSTIF/gin-truffle-dapp/types"
@@ -34,7 +35,7 @@ func InfoService(client *ethclient.Client) (*big.Int, *big.Int, uint64) {
 	return networkID, chainID, latestBlock
 }
 
-func IssueService(client *ethclient.Client, instance *lib.Cert, newCertificate certTypes.InsertCertificate) (*types.Transaction, error) {
+func IssueService(client *ethclient.Client, instance *lib.Cert, newCertificate certTypes.FormCertificate) (*types.Transaction, error) {
 	privateKey, err := crypto.HexToECDSA(os.Getenv("PRIVATE_KEY"))
 	if err != nil {
 		log.Fatal(err)
@@ -68,7 +69,12 @@ func IssueService(client *ethclient.Client, instance *lib.Cert, newCertificate c
 	auth.Value = big.NewInt(0)
 	auth.GasLimit = gasLimit
 	auth.GasPrice = gasPrice
-	trx, err := instance.Issue(auth, big.NewInt(int64(newCertificate.ID)), newCertificate.Name, newCertificate.Course, newCertificate.Grade, newCertificate.Date)
+	intID, err := strconv.ParseInt(newCertificate.ID, 10, 64)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	trx, err := instance.Issue(auth, big.NewInt(intID), newCertificate.Name, newCertificate.Course, newCertificate.Grade, newCertificate.Date)
 
 	return trx, err
 }
