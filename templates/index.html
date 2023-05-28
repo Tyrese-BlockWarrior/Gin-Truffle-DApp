@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title>{{ .title }}</title>
+    <link
+      rel="stylesheet"
+      href="http://localhost:8080/static/css/bulma.min.css"
+    />
+  </head>
+
+  <body>
+    <nav
+      class="navbar is-link title is-4"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+          <img src="http://localhost:8080/static/icons/certificate.svg" />
+          <span class="ml-2">{{ .title }}</span>
+        </a>
+      </div>
+      <div class="navbar-end">
+        <a class="navbar-item mx-2" href="/issue">Issue Certificate</a>
+      </div>
+    </nav>
+    <section class="section">
+      <div class="container has-text-centered">
+        <img
+          src="http://localhost:8080/static/icons/certificate.svg"
+          width="256"
+        />
+        <h3 class="title is-4">Search Certificate Details</h3>
+        <form action="/fetch" method="get">
+          <input
+            class="input is-large"
+            type="text"
+            name="id"
+            placeholder="Enter Certificate ID"
+          />
+        </form>
+      </div>
+    </section>
+  </body>
+</html>
