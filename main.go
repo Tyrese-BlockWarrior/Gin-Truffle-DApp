@@ -48,6 +48,7 @@ func main() {
 	}
 
 	router := gin.Default()
+	router.Static("/static", "./assets")
 	router.GET("/", func(ctx *gin.Context) {
 		controllers.InfoController(ctx, client)
 	})
