@@ -19,13 +19,13 @@ func InfoController(ctx *gin.Context, client *ethclient.Client) {
 }
 
 func IndexPageController(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "index.html", gin.H{
+	ctx.HTML(http.StatusOK, "index.tmpl", gin.H{
 		"title": "Certificate DApp",
 	})
 }
 
 func IssuePageController(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "issue.html", gin.H{
+	ctx.HTML(http.StatusOK, "issue.tmpl", gin.H{
 		"title": "Certificate DApp", "form": "", "message": "is-hidden", "issuedID": "",
 	})
 }
@@ -44,7 +44,7 @@ func IssueController(ctx *gin.Context, client *ethclient.Client, instance *lib.C
 	}
 
 	_ = trx
-	ctx.HTML(http.StatusCreated, "issue.html", gin.H{
+	ctx.HTML(http.StatusCreated, "issue.tmpl", gin.H{
 		"title": "Certificate DApp", "form": "is-hidden", "message": "", "issuedID": newCertificate.ID,
 	})
 }
@@ -62,7 +62,7 @@ func FetchController(ctx *gin.Context, instance *lib.Cert) {
 		return
 	}
 
-	ctx.HTML(http.StatusOK, "fetch.html", gin.H{
+	ctx.HTML(http.StatusOK, "fetch.tmpl", gin.H{
 		"title": "Certificate DApp", "id": id, "name": result.Name, "course": result.Course, "grade": result.Grade, "date": result.Date,
 	})
 }
