@@ -1,10 +1,5 @@
 package types
 
-type Details struct {
-	From     string `json:"from"`
-	Contract string `json:"contract"`
-}
-
 type JsonCertificate struct {
 	ID     int    `json:"id"`
 	Name   string `json:"name"`
