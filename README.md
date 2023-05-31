@@ -62,6 +62,18 @@ Start the application
 go run .
 ```
 
+Or create an executable
+
+```bash
+go build -o build/
+```
+
+Run the executable
+
+```bash
+./build/gin-truffle-dapp
+```
+
 ## 📜 License
 
 Click [here](./LICENSE.txt).
